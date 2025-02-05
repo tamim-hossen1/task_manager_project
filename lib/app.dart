@@ -13,7 +13,7 @@ import 'package:task_manager_project/Ui/Utils/app_color.dart';
 
 class TaskManagerApp extends StatelessWidget {
    TaskManagerApp({super.key});
-  GlobalKey<NavigatorState> navigatorkey=GlobalKey<NavigatorState>();
+  static GlobalKey<NavigatorState> Navigatorkey=GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class TaskManagerApp extends StatelessWidget {
       ),
 
       initialRoute: '/',
-      navigatorKey: navigatorkey,
+      navigatorKey: Navigatorkey,
         onGenerateRoute: (RouteSettings settings){
         late Widget widget;
         if(settings.name==SplashScreen.name){
