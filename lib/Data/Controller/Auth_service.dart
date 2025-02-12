@@ -36,4 +36,13 @@ class AuthService extends GetConnect {
     }
     return response;
   }
+
+
+  Future<List<dynamic>?> fetchPosts() async{
+    final Response response=await get(Urls.taskListByStatusUrl('Progress'));
+    if(response.status.hasError){
+      return Future.error(response.statusText ?? 'Unknown Error');
+    }
+    return response.body;
+  }
 }
