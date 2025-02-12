@@ -1,46 +1,53 @@
-import 'dart:convert';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../Model/User_model.dart';
-
-class AuthController{
-  static String? accessToken;
-  static UserModel? userModel;
-
-  static const String _accessTokenKey='access-token';
-  static const String _userDataKey='user-data';
-  
-  static Future<void> saveUserDta(String token,UserModel model) async{
-    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-    await sharedPreferences.setString(_accessTokenKey, token);
-    await sharedPreferences.setString(_userDataKey, jsonEncode(model.toJson()));
-    accessToken=token;
-    userModel=model;
-  }
-
-  static Future<void> getUserData() async{
-    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-    String? token=sharedPreferences.getString(_accessTokenKey);
-    String? useerdata=sharedPreferences.getString(_userDataKey);
-    accessToken=token;
-    userModel=UserModel.fromJson(jsonDecode(useerdata!));
-  }
-
-   static Future<bool> isUserLoggedIn() async{
-    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-    String? token=sharedPreferences.getString(_accessTokenKey);
-    if(token != null){
-      await getUserData();
-      return true;
-    }
-    return false;
-   }
-
-   static Future<void> clearUserdata() async{
-    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-    await sharedPreferences.clear();
-   }
-
-
-}
+// import 'dart:convert';
+// import 'package:shared_preferences/shared_preferences.dart';
+//
+// import 'package:task_manager_project/Data/Model/User_model.dart';
+//
+// class AuthController {
+//   static String? accessToken;
+//   static UserModel? userData;
+//
+//   static Future<void> saveUserData(UserModel userData) async {
+//     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//     await sharedPreferences.setString(
+//         "userData", jsonEncode(userData.toJson()));
+//     AuthController.userData = userData;
+//   }
+//
+//   static Future<UserModel?> getUserData() async {
+//     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//     String? result = sharedPreferences.getString("userData");
+//     if (result == null) {
+//       return null;
+//     }
+//     final user = UserModel.fromJson(jsonDecode(result));
+//     AuthController.userData = user;
+//     return user;
+//   }
+//
+//   static Future<void> saveUserToken(String token) async {
+//     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//     await sharedPreferences.setString("token", token);
+//     accessToken = token;
+//   }
+//
+//   static Future<String?> getUserToken() async {
+//     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//     return sharedPreferences.getString("token");
+//   }
+//
+//   static Future<bool> isUserLoggedIn() async {
+//     final result = await getUserToken();
+//     accessToken = result;
+//     bool loginState = result != null;
+//     if(loginState) {
+//       await getUserData();
+//     }
+//     return loginState;
+//   }
+//
+//   static Future<void> clearUserData() async {
+//     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//     await sharedPreferences.clear();
+//   }
+// }

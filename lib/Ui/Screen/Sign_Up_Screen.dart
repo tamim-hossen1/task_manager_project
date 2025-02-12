@@ -36,7 +36,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
     return Scaffold(
       body: ScreenBackground(
         child: Form(
@@ -73,14 +75,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _firstNameTEController,
                   decoration: const InputDecoration(labelText: 'First Name'),
                   validator: (value) =>
-                  value == null || value.isEmpty ? 'First name is required' : null,
+                  value == null || value.isEmpty
+                      ? 'First name is required'
+                      : null,
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _lastNameTEController,
                   decoration: const InputDecoration(labelText: 'Last Name'),
                   validator: (value) =>
-                  value == null || value.isEmpty ? 'Last name is required' : null,
+                  value == null || value.isEmpty
+                      ? 'Last name is required'
+                      : null,
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
@@ -141,6 +147,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+}
 
   Widget _buildSignUpSection() {
     return RichText(
@@ -160,4 +167,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-}
+
+

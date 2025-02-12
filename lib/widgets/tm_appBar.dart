@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_project/Ui/Screen/SignIn_Screen.dart';
 import 'package:task_manager_project/Ui/Screen/Update_profile_Screen.dart';
 import 'package:task_manager_project/Ui/Utils/app_color.dart';
+import 'package:get/get.dart';
 
 class TMAppbar extends StatelessWidget implements PreferredSizeWidget {
   const TMAppbar({super.key});
@@ -34,7 +36,9 @@ class TMAppbar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.offAllNamed(SigninScreen.name);
+            },
             icon: const Icon(Icons.logout),
           ),
         ],

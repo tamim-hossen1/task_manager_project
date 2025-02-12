@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_manager_project/Data/Controller/Auth_Controller.dart';
+import 'package:task_manager_project/Data/Controller/Auth_Controller_Get.dart';
 import 'package:task_manager_project/Ui/Screen/Forgot_password_email_verify_Screen.dart';
 import 'package:task_manager_project/Ui/Screen/Sign_Up_Screen.dart';
 import 'package:task_manager_project/Ui/Screen/main_bottom_nav_screen.dart';
@@ -19,78 +21,94 @@ class SigninScreen extends StatefulWidget {
 class _SigninScreenState extends State<SigninScreen> {
 
 
+  final AuthControllerGet _authControllerGet = Get.put(AuthControllerGet());
 
 
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _passwordTEController = TextEditingController();
 
-  final TextEditingController _emailTEController=TextEditingController();
-  final TextEditingController _passwordTEController=TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final textTheme=Theme.of(context).textTheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
     return Scaffold(
-      body: ScreenBackground(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 100,),
-                  Text('Get Started With',style: textTheme.titleLarge,),
-                  const SizedBox(height: 20,),
-                  TextFormField(
-                    controller: _emailTEController,
-                    decoration: const InputDecoration(
-                        labelText: "Email"
-                    ),
+        body: ScreenBackground(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 100,),
+                    Text('Get Started With', style: textTheme.titleLarge,),
+                    const SizedBox(height: 20,),
+                    TextFormField(
+                      controller: _emailTEController,
+                      decoration: const InputDecoration(
+                          labelText: "Email"
+                      ),
 
-                  ),
-                  const SizedBox(height: 20,),
-                  TextFormField(
-                    controller: _passwordTEController,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
                     ),
-                  ),
-                  const SizedBox(height: 40,),
-                  ElevatedButton(
-                      onPressed: (){
-                        Navigator.pushReplacementNamed(context, MainBottomNavScreen.name);
+                    const SizedBox(height: 20,),
+                    TextFormField(
+                      controller: _passwordTEController,
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                      ),
+                    ),
+                    const SizedBox(height: 40,),
+                    Obx(() =>
+                    _authControllerGet.isLoadding.value
+                        ? CircularProgressIndicator()
+                        : ElevatedButton(
+                      onPressed: () {
+                        _authControllerGet.SignIn(
+                          _emailTEController.text,
+                          _passwordTEController.text,
+
+                        );
+                        Get.offAllNamed(MainBottomNavScreen.name);
                       },
                       child: const Icon(Icons.arrow_circle_right_outlined),
-                  ),
+                    ),
+                    ),
 
-                  const SizedBox(height: 40,),
-            TextButton(
-                onPressed: () {
+                    const SizedBox(height: 40,),
+                    TextButton(
+                        onPressed: () {
+                          Get.offAllNamed(ForgotPasswordEmailVerifyScreen.name);
+                        },
+                        child: const Text(
+                          'Forgot Password',
+                          style: TextStyle(
+                              color: Colors.green
+                          ),
+                        )),
 
-                 Get.offAllNamed(ForgotPasswordEmailVerifyScreen.name);
-                },
-                child:const Text(
-                  'Forgot Password',
-                  style: TextStyle(
-                    color: Colors.green
-                  ),
-                  )),
-
-                  const SizedBox(height: 5,),
-                  const _builSignUpSection()
+                    const SizedBox(height: 5,),
+                    const _builSignUpSection()
 
 
-                ],
+                  ],
+                ),
               ),
-            ),
 
 
-          )
-      )
+            )
+        )
     );
-
+  }
+  void dispose() {
+    // TODO: implement dispose
+    _emailTEController.dispose();
+    _passwordTEController.dispose();
   }
 }
+
 
 class _builSignUpSection extends StatelessWidget {
   const _builSignUpSection();
